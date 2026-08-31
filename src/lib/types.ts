@@ -4,11 +4,16 @@ export interface Product {
   tagline: string | null;
   description: string | null;
   price: number;
+  sale_price: number | null;
   image_url: string | null;
+  image_urls: string[] | null;
   category: string;
   badge: string | null;
   featured: boolean;
   stock: number;
+  sku: string | null;
+  tags: string[] | null;
+  published: boolean;
   created_at: string;
 }
 

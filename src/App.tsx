@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AmbientBackground } from '@/components/AmbientBackground';
 import { Navbar } from '@/components/Navbar';
 import { Marquee } from '@/components/Marquee';
 import { Hero } from '@/components/Hero';
@@ -16,8 +17,9 @@ function App() {
 
   return (
     <div className="relative min-h-screen bg-[#08080b] text-white">
+      <AmbientBackground />
       <Navbar onOpenCart={() => setCartOpen(true)} />
-      <main>
+      <main className="relative z-10">
         <Hero />
         <Marquee />
         <Drops />
@@ -27,7 +29,9 @@ function App() {
         <Reviews />
         <Contact />
       </main>
-      <Footer />
+      <div className="relative z-10">
+        <Footer />
+      </div>
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
     </div>
   );

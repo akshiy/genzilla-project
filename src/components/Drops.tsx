@@ -13,6 +13,7 @@ export function Drops() {
       .from('products')
       .select('*')
       .eq('featured', true)
+      .eq('published', true)
       .order('created_at', { ascending: false })
       .then(({ data, error }) => {
         if (!error && data) setProducts(data);
@@ -64,7 +65,7 @@ export function Drops() {
                 <p className="text-sm leading-relaxed text-white/60 line-clamp-2">{p.description}</p>
               </div>
               <div className="flex items-center justify-between px-5 pb-5">
-                <span className="font-display text-2xl font-extrabold">${p.price.toFixed(2)}</span>
+                <span className="font-display text-2xl font-extrabold">₹{Number(p.sale_price ?? p.price).toFixed(0)}</span>
                 <button
                   onClick={() => add(p, 1)}
                   className="flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-black transition-transform hover:scale-105"

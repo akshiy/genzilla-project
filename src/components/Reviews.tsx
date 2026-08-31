@@ -1,52 +1,5 @@
+import { useEffect, useState } from 'react';
 import { Star, Quote } from 'lucide-react';
-
-const REVIEWS = [
-  { name: 'Maya R.', handle: '@mayalights', text: 'The Neon Ghost glows in the dark. I literally get asked about it every time I pull it out. Insane build quality.', rating: 5 },
-  { name: 'Devon K.', handle: '@devkeeps', text: 'Inferno X1 cuts through wind like nothing. Used it camping in the hills — lit first strike every time.', rating: 5 },
-  { name: 'Priya S.', handle: '@priyagram', text: "Refillable AND aesthetic? Finally a lighter that doesn't look like it came from a gas station.", rating: 5 },
-  { name: 'Leo M.', handle: '@leomakes', text: 'Forge Master for my resin work is a game changer. The stand-up base means I can use both hands. Worth every cent.', rating: 5 },
-];
-
-export function Reviews() {
-  return (
-    <section className="relative py-24">
-      <div className="mx-auto max-w-7xl px-5">
-        <div className="mb-12 text-center">
-          <div className="mb-3 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-orange-400">
-            <Star className="h-4 w-4 fill-orange-400 text-orange-400" /> Loved by 50k+
-          </div>
-          <h2 className="font-display text-4xl font-extrabold tracking-tight md:text-5xl">
-            The <span className="text-gradient-fire">hype</span> is real
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {REVIEWS.map((r, i) => (
-            <div
-              key={r.name}
-              className="glass rounded-3xl p-6 transition-all duration-500 hover:border-orange-400/30 animate-rise"
-              style={{ animationDelay: `${i * 80}ms` }}
-            >
-              <Quote className="mb-4 h-7 w-7 text-orange-400/40" />
-              <p className="text-sm leading-relaxed text-white/75">{r.text}</p>
-              <div className="mt-5 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-red-600 font-display text-sm font-bold text-white">
-                  {r.name.charAt(0)}
-                </div>
-                <div>
-                  <div className="text-sm font-semibold">{r.name}</div>
-                  <div className="text-xs text-white/45">{r.handle}</div>
-                </div>
-              </div>
-              <div className="mt-3 flex gap-0.5">
-                {Array.from({ length: r.rating }).map((_, j) => (
-                  <Star key={j} className="h-3.5 w-3.5 fill-orange-400 text-orange-400" />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+import { supabase } from '@/lib/supabase';
+const fallback=[{name:'Maya R.',handle:'@mayalights',text:'The Neon Ghost glows in the dark. I get asked about it every time I pull it out.',rating:5},{name:'Devon K.',handle:'@devkeeps',text:'Inferno X1 cuts through wind like nothing.',rating:5},{name:'Priya S.',handle:'@priyagram',text:'Refillable AND aesthetic? Finally.',rating:5},{name:'Leo M.',handle:'@leomakes',text:'Forge Master is a game changer.',rating:5}];
+export function Reviews(){const [reviews,setReviews]=useState(fallback);useEffect(()=>{supabase.from('homepage_content').select('content').eq('section_key','reviews').eq('enabled',true).maybeSingle().then(({data})=>{if(Array.isArray(data?.content))setReviews(data.content)})},[]);return <section className="relative py-24"><div className="mx-auto max-w-7xl px-5"><div className="mb-12 text-center"><div className="mb-3 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-orange-400"><Star className="h-4 w-4 fill-orange-400 text-orange-400"/> Customer love</div><h2 className="font-display text-4xl font-extrabold tracking-tight md:text-5xl">The <span className="text-gradient-fire">hype</span> is real</h2></div><div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">{reviews.map((r:any,i)=><div key={`${r.name}-${i}`} className="glass rounded-3xl p-6 transition-all duration-500 hover:border-orange-400/30 animate-rise" style={{animationDelay:`${i*80}ms`}}><Quote className="mb-4 h-7 w-7 text-orange-400/40"/><p className="text-sm leading-relaxed text-white/75">{r.text}</p><div className="mt-5 flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-red-600 font-display text-sm font-bold text-white">{String(r.name||'G').charAt(0)}</div><div><div className="text-sm font-semibold">{r.name}</div><div className="text-xs text-white/45">{r.handle}</div></div></div><div className="mt-3 flex gap-0.5">{Array.from({length:Number(r.rating)||5}).map((_,j)=><Star key={j} className="h-3.5 w-3.5 fill-orange-400 text-orange-400"/>)}</div></div>)}</div></div></section>}
