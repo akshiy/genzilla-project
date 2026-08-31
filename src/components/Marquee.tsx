@@ -1,0 +1,5 @@
+import { useEffect, useState } from 'react';
+import { Flame } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
+const fallback=['FREE SHIPPING OVER ₹1500','NEW DROP — NEON GHOST','REFILLABLE. REUSABLE. ICONIC.','GEN Z APPROVED','WINDPROOF TORCH FLAME','SHIPS IN 24H'];
+export function Marquee(){const [items,setItems]=useState(fallback);useEffect(()=>{supabase.from('homepage_content').select('content').eq('section_key','marquee').eq('enabled',true).maybeSingle().then(({data})=>{if(Array.isArray(data?.content?.items))setItems(data.content.items)})},[]);const loop=[...items,...items];return <div className="relative overflow-hidden border-y border-white/10 bg-gradient-to-r from-orange-500/10 via-red-500/10 to-amber-500/10 py-2.5"><div className="flex w-max animate-marquee gap-10 whitespace-nowrap">{loop.map((t,i)=><span key={i} className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/70"><Flame className="h-3.5 w-3.5 text-orange-400"/>{t}</span>)}</div></div>}

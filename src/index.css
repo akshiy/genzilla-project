@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #08080b;
+    --bg-soft: #0e0e13;
+    --fg: #f5f5f7;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .font-display {
+    font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-gradient-fire {
+    background: linear-gradient(120deg, #ff6a00 0%, #ff2d55 40%, #ff8a3d 70%, #ffd000 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glow-fire {
+    box-shadow: 0 0 40px -8px rgba(255, 80, 0, 0.45);
+  }
+
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Cinematic keyframes */
+@keyframes flame-flicker {
+  0%, 100% { opacity: 1; transform: scaleY(1) scaleX(1); }
+  25% { opacity: 0.85; transform: scaleY(1.08) scaleX(0.96); }
+  50% { opacity: 0.95; transform: scaleY(0.95) scaleX(1.04); }
+  75% { opacity: 0.8; transform: scaleY(1.05) scaleX(0.98); }
+}
+.animate-flicker { animation: flame-flicker 2.4s ease-in-out infinite; }
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-18px) rotate(2deg); }
+}
+.animate-float-slow { animation: float-slow 7s ease-in-out infinite; }
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee 28s linear infinite; }
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-rise { animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-scale-in { animation: scale-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.animate-pulse-ring { animation: pulse-ring 2s ease-out infinite; }
+
+@keyframes ember-rise {
+  0% { transform: translate(0, 0) scale(0.6); opacity: 0; }
+  10% { opacity: 0.9; }
+  90% { opacity: 0.5; }
+  100% { transform: translate(var(--drift, 40px), -100vh) scale(1); opacity: 0; }
+}
+
+::selection {
+  background: #ff6a00;
+  color: #08080b;
+}
